@@ -20,7 +20,6 @@ cd booking-management
 2.Install dependencies:
 
 composer install
-npm install && npm run dev
 
 
 3.Set up the environment file .env:
