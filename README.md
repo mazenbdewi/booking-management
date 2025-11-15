@@ -42,7 +42,7 @@ php artisan make:initial-users
 7.Start the local server:
 php artisan serve
 
-Access the admin panel via /placeofedit.
+Access the admin panel via /placeofedit
 
 
 API Endpoints
