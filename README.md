@@ -1,64 +1,49 @@
-# Booking Management System - Laravel & Filament
+Booking Management System - Laravel & Filament
 
-## 1. طريقة تشغيل المشروع
+1. How to Run the Project
+   Requirements:
 
-### المتطلبات:
+PHP >= 8.1
 
--   PHP >= 8.1
--   Composer
--   Laravel 12
--   MySQL أو MariaDB
+Composer
 
-### خطوات التثبيت:
+Laravel 12
 
-1. استنساخ المشروع:
+MySQL or MariaDB
 
-```bash
+Installation Steps:
+
+1.Clone the project:
+
 git clone https://github.com/USERNAME/booking-management.git
 cd booking-management
-```
 
-2. تثبيت الاعتماديات:
-
-```bash
+2.Install dependencies:
 composer install
 npm install && npm run dev
-```
 
-3. إعداد ملف البيئة `.env`:
+3.Set up the environment file .env:
 
-```bash
 cp .env.example .env
 php artisan key:generate
-```
 
--   قم بتحديث إعدادات قاعدة البيانات في `.env`
+Update your database settings in .env.
 
-4. تشغيل الـ migrations:
-
-```bash
+4.Run migrations:
 php artisan migrate
-```
 
-5- تحميل البرمشين
+5.Install Filament Shield:
 php artisan shield:install admin
 
-6.  إنشاء ادمين و رولز stuf إداري:
-
-````bash
+6.Create an initial admin and staff roles:
 php artisan make:initial-users
 
-6. تشغيل الخادم المحلي:
-
-```bash
+7.Start the local server:
 php artisan serve
-````
 
--   الوصول إلى لوحة الإدارة عبر `/placeofedit`
+API Endpoints
 
-7. واجهة API:
-
-تسجيل دخول
+Login:
 
 POST /api/login
 Content-Type: application/json
@@ -67,27 +52,25 @@ Content-Type: application/json
 "password": "admin"
 }
 
--   إنشاء حجز جديد:
-
-```
+Create a new booking:
 
 POST /api/bookings
-Accept :application/json
+Accept: application/json
 Content-Type: application/json
 {
-  "customer_name": "John Doe",
-  "phone_number": "123456789",
-  "booking_date": "2025-11-20 14:00:00",
-  "service_id": 1,
-  "notes": "Special request"
+"customer_name": "John Doe",
+"phone_number": "123456789",
+"booking_date": "2025-11-20 14:00:00",
+"service_id": 1,
+"notes": "Special request"
 }
-```
 
-استعراض الحجوزات
+View bookings:
 
 GET /api/bookings
-Accept :application/json
+Accept: application/json
 Content-Type: application/json
+
 {
 "status": "success",
 "message": "success get data",
@@ -109,66 +92,38 @@ Content-Type: application/json
 "status": "Pending",
 "created_at": "2025-11-15 17:39:36",
 "created_at_formatted": "15/11/2025 17:39"
-},
-{
-"id": 2,
-"customer_name": "test 66",
-"phone_number": "+32323232323232323",
-"booking_date": "2025-11-15 15:15:51",
-"booking_date_formatted": "15/11/2025 15:15",
-"service": {
-"id": 1,
-"name": "test 1",
-"description": "test test test",
-"created_at": "2025-11-15 11:56:53",
-"updated_at": "2025-11-15 11:56:53"
-},
-"notes": "ewewew",
-"status": "Pending",
-"created_at": "2025-11-15 12:15:55",
-"created_at_formatted": "15/11/2025 12:15"
-},
-{
-"id": 1,
-"customer_name": "test 55",
-"phone_number": "0958682674",
-"booking_date": "2025-11-15 15:15:11",
-"booking_date_formatted": "15/11/2025 15:15",
-"service": {
-"id": 1,
-"name": "test 1",
-"description": "test test test",
-"created_at": "2025-11-15 11:56:53",
-"updated_at": "2025-11-15 11:56:53"
-},
-"notes": "test note",
-"status": "Cancelled",
-"created_at": "2025-11-15 12:15:25",
-"created_at_formatted": "15/11/2025 12:15"
 }
 ]
 }
 
----
+2. System Structure
 
-## 2. هيكلة النظام
+app/Models/User.php – User model and relationships
 
--   `app/Models/User.php` : نموذج المستخدم وعلاقاته
--   `app/Models/Booking.php` : نموذج الحجز وعلاقاته
--   `app/Models/Service.php` : نموذج الخدمات
--   `database/migrations/` : ملفات إنشاء الجداول (users, services, bookings)
--   `routes/api.php` : نقطة API لإنشاء الحجوزات
--   `routes/web.php` : صفحات Laravel العامة و Filament Admin Panel
--   `app/Filament/Resources/` : موارد Filament لإدارة المستخدمين والحجوزات والخدمات
+app/Models/Booking.php – Booking model and relationships
 
----
+app/Models/Service.php – Service model
 
-## 3. قرارات وافتراضات تم اتخاذها
+database/migrations/ – Table creation files (users, services, bookings)
 
-1. **فصل جدول الخدمات (`services`)** لجعل النظام أكثر ديناميكية وسهل الإضافة أو التعديل على أنواع الخدمات.
-2. **ربط جدول الحجوزات بـ `service_id` و `created_by`** لضمان تكامل البيانات.
-3. **تحديد ENUM للحالة (`Pending`, `Confirmed`, `Cancelled`)** لتسهيل إدارة حالة الحجز.
-4. **تحديد دورين فقط للمستخدمين (`admin`, `staff`)** للتحكم بالوصول بشكل بسيط.
-5. **إنشاء فهارس (`indexes`) على الأعمدة الأكثر استخدامًا في البحث** مثل: `booking_date`, `status`, `service_id`, `created_by`, `role`.
-6. **استخدام Filament Admin Panel** لإدارة المستخدمين والحجوزات والخدمات بسهولة دون الحاجة لتطوير واجهة إدارة يدوية.
-7. **نقطة API واحدة (`POST /api/bookings`)** لإنشاء الحجوزات، يمكن توسيعها لاحقًا لإضافة تحديث أو حذف الحجوزات أو استعراضها.
+routes/api.php – API endpoint for creating bookings
+
+app/Filament/Resources/ – Filament resources for managing users, bookings, and services
+
+3. Decisions and Assumptions
+
+Separate services table to make the system more dynamic and easy to add or edit service types.
+
+Bookings linked to service_id and created_by for data integrity.
+
+Use ENUM for status (Pending, Confirmed, Cancelled) to simplify booking status management.
+
+Two user roles only (admin, staff) for simple access control.
+
+Indexes on frequently searched columns: booking_date, status, service_id, created_by, role.
+
+Filament Admin Panel is used for managing users, bookings, and services without building a custom admin interface.
+
+Single API endpoint (POST /api/bookings) for creating bookings, which can be extended later to update, delete, or view bookings.
+
+An Artisan command was created to generate the first admin user, assign them the super_admin role, and create the staff role for other users.
