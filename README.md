@@ -14,7 +14,7 @@
 1. **Clone the project:**
 
 ```bash
-git clone https://github.com/USERNAME/booking-management.git
+git clone https://github.com/mazenbdewi/booking-management.git
 cd booking-management
 
 2.Install dependencies:
