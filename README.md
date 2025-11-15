@@ -1,26 +1,27 @@
-Booking Management System - Laravel & Filament
+# Booking Management System - Laravel & Filament
 
-1. How to Run the Project
-   Requirements:
+## 1. How to Run the Project
 
-PHP >= 8.1
+### Requirements:
 
-Composer
+-   PHP >= 8.1
+-   Composer
+-   Laravel 12
+-   MySQL or MariaDB
 
-Laravel 12
+### Installation Steps:
 
-MySQL or MariaDB
+1. **Clone the project:**
 
-Installation Steps:
-
-1.Clone the project:
-
+```bash
 git clone https://github.com/USERNAME/booking-management.git
 cd booking-management
 
 2.Install dependencies:
+
 composer install
 npm install && npm run dev
+
 
 3.Set up the environment file .env:
 
@@ -41,60 +42,64 @@ php artisan make:initial-users
 7.Start the local server:
 php artisan serve
 
+Access the admin panel via /placeofedit.
+
+
 API Endpoints
 
 Login:
-
 POST /api/login
 Content-Type: application/json
 {
-"email": "admin@admin.com",
-"password": "admin"
+  "email": "admin@admin.com",
+  "password": "admin"
 }
 
 Create a new booking:
-
 POST /api/bookings
 Accept: application/json
 Content-Type: application/json
 {
-"customer_name": "John Doe",
-"phone_number": "123456789",
-"booking_date": "2025-11-20 14:00:00",
-"service_id": 1,
-"notes": "Special request"
+  "customer_name": "John Doe",
+  "phone_number": "123456789",
+  "booking_date": "2025-11-20 14:00:00",
+  "service_id": 1,
+  "notes": "Special request"
 }
 
 View bookings:
-
 GET /api/bookings
 Accept: application/json
 Content-Type: application/json
 
+
+Example Response:
 {
-"status": "success",
-"message": "success get data",
-"data": [
-{
-"id": 3,
-"customer_name": "Mazen Bdewi",
-"phone_number": "+41791234567",
-"booking_date": "2025-11-20 15:30:00",
-"booking_date_formatted": "20/11/2025 15:30",
-"service": {
-"id": 1,
-"name": "test 1",
-"description": "test test test",
-"created_at": "2025-11-15 11:56:53",
-"updated_at": "2025-11-15 11:56:53"
-},
-"notes": "Test booking",
-"status": "Pending",
-"created_at": "2025-11-15 17:39:36",
-"created_at_formatted": "15/11/2025 17:39"
+  "status": "success",
+  "message": "success get data",
+  "data": [
+    {
+      "id": 3,
+      "customer_name": "Mazen Bdewi",
+      "phone_number": "+41791234567",
+      "booking_date": "2025-11-20 15:30:00",
+      "booking_date_formatted": "20/11/2025 15:30",
+      "service": {
+        "id": 1,
+        "name": "test 1",
+        "description": "test test test",
+        "created_at": "2025-11-15 11:56:53",
+        "updated_at": "2025-11-15 11:56:53"
+      },
+      "notes": "Test booking",
+      "status": "Pending",
+      "created_at": "2025-11-15 17:39:36",
+      "created_at_formatted": "15/11/2025 17:39"
+    }
+  ]
 }
-]
-}
+
+
 
 2. System Structure
 
@@ -127,3 +132,4 @@ Filament Admin Panel is used for managing users, bookings, and services without 
 Single API endpoint (POST /api/bookings) for creating bookings, which can be extended later to update, delete, or view bookings.
 
 An Artisan command was created to generate the first admin user, assign them the super_admin role, and create the staff role for other users.
+```
